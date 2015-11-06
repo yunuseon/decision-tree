@@ -1,16 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "decision_tree.h"
 
 #define NA -1
-
-
-typedef struct Node
-{
-	int val;
-	struct Node* left;
-	struct Node* right;	
-} Node;
-
 
 Node new_node(int val, Node* left, Node* right)
 {
@@ -70,10 +62,11 @@ int wander(Node* root, int* bits, int size)
 void free_tree(Node *root) 
 {
 	if (root->val == NA) {
-		free(root);
-	} else {
 		free_tree(root->left);
 		free_tree(root->right);
+	} else {
+		free(root->left);
+		free(root->right);
 	}
 }
 
@@ -82,18 +75,18 @@ int main(void)
 {
 
 	/*
-	 *			┌───┐	
-	 *			│x_1│
-	 *			└───┘
-	 *   			╱   ╲
-	 * 		       ╱     ╲
-	 *		      ╱	      ╲	
-	 *		     ╱	       ╲
-	 *		   0╱		╲1
-	 *		   ╱		 ╲
-	 *		  ╱		  ╲	
-	 *		 ╱		   ╲
-	 *		╱		    ╲
+	 *	                ┌───┐	
+	 *	                │x_1│
+	 *	                └───┘
+	 *   		        ╱   ╲
+	 * 	               ╱     ╲
+	 *	              ╱	      ╲	
+	 *                   ╱	       ╲
+	 *	           0╱	     	╲1
+	 *	           ╱		 ╲
+	 *	          ╱		  ╲	
+	 *		 ╱      	   ╲
+	 *	        ╱	            ╲
 	 *	    ┌───┐	 	    ┌───┐
 	 *	    │x_2│ 		    │x_2│
 	 *	    └───┘ 		    └───┘
@@ -117,9 +110,9 @@ int main(void)
 	
 	
 	int path[] = 
-		{ 	1, // x_1
-	 		1, // x_2
-	 		1  // x_3  
+		{ 	1, /* x_1 */
+	 		1, /* x_2 */
+	 		1  /* x_3 */
 	 	};
 
 	printf("%d\n", wander(root, path, 3) );
